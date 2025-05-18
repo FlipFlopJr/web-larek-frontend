@@ -1,70 +1,42 @@
-export type ProductCategory =
-	| 'софт-скил'
-	| 'хард-скил'
-	| 'кнопка'
-	| 'дополнительное'
-	| 'другое';
-
-export type CategoryClasses = Record<ProductCategory, string>;
-
-export interface IProduct {
-	id: string;
-	title: string;
-	description: string;
-	image: string;
-	price: number | null;
-	category: ProductCategory;
-	index: number;
+export interface IProductItem {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  image: string;
+  price: number | null;
 }
 
-export interface ICardActions {
-	onClick: (event: MouseEvent) => void;
+export interface IAppState {
+  catalog: IProductItem[];
+  preview: string;
+  basket: string[];
+  order: IOrder;
+  total: string | number;
+  loading: boolean;
 }
 
-export interface IWebLarekApi {
-	getProductList: () => Promise<IProduct[]>;
-	getProductInfo: (id: string) => Promise<IProduct>;
-	orderProducts: (order: IOrder) => Promise<IOrderResult>;
+
+export interface IProductsList {
+  products: IProductItem[];
 }
 
-export interface IPage {
-	catalog: HTMLElement[];
-	locked: boolean;
-}
-
-export interface IModalView {
-	content: HTMLElement;
-}
-
-export interface IBasketView {
-	items: HTMLElement[];
-	total: number;
-}
-
-export interface IFormState {
-	valid: boolean;
-	errors: string[];
-}
-
-export type FormErrors = Partial<Record<keyof IOrderForm, string>>;
 
 export interface IOrderForm {
-	payment: string;
-	address: string;
-	email: string;
-	phone: string;
+  payment?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+  total?: string | number;
 }
 
 export interface IOrder extends IOrderForm {
-	total: number;
-	items: string[];
+  items: string[];
 }
+
+
+export type FormErrors = Partial<Record<keyof IOrder, string>>;
 
 export interface IOrderResult {
-	id: string;
-	total: number;
-}
-
-export interface ISuccess {
-	total: number;
+  id: string;
 }
